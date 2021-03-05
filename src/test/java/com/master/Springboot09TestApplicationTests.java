@@ -50,4 +50,30 @@ class Springboot09TestApplicationTests {
         mailSender.send(mimeMessage);
     }
 
+    /**
+     * @param subject:邮件主题
+     * @param context:邮件内容
+     * @param html:是否支持html格式
+     * @throws MessagingException
+     */
+
+    public void sendMail(String subject, String context, Boolean html) throws MessagingException {
+        MimeMessage mimeMessage = mailSender.createMimeMessage();
+        //组装
+        //正文
+        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+        helper.setSubject("这是邮件主题");    //邮件主题
+        helper.setText("<p style='color:red'>这是邮件的内容</p>", true);   //邮件内容，html为true表示以html语言格式发送
+
+        //附件
+        helper.addAttachment("1.jpg", new File("E:/pictures/1.jpg"));
+        helper.addAttachment("2.jpg", new File("E:/pictures/2.jpg"));
+
+        helper.setTo("1763118074@qq.com");   //接收人
+        helper.setFrom("1763118074@qq.com"); //发送人
+
+        mailSender.send(mimeMessage);
+
+    }
+
 }
